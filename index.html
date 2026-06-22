@@ -53,7 +53,74 @@
             <p class="menu-subtitle">Architectural block puzzle</p>
             <button type="button" id="start-game-button">Start Game</button>
             <button type="button" id="continue-game-button">Continue</button>
+            <button type="button" id="how-to-play-button">How To Play</button>
             <button type="button" id="menu-reset-records-button">Reset Records</button>
+          </div>
+        </div>
+        <div id="how-to-play-overlay" class="level-complete-overlay how-to-play-overlay hidden">
+          <div class="overlay-panel how-to-play-panel" role="dialog" aria-labelledby="how-to-play-title">
+            <h2 id="how-to-play-title">How to Play</h2>
+            <div class="how-to-play-copy">
+              <p>Build the blueprint using falling blocks.</p>
+              <p>Place pieces inside the highlighted building area.</p>
+              <p>The game continues until there is no room for another piece.</p>
+              <p>When the run ends, the blueprint is evaluated.</p>
+            </div>
+            <div class="how-to-play-section">
+              <h3>To pass a level</h3>
+              <ul>
+                <li>build at least 80% of the blueprint</li>
+                <li>fill all Required Blueprint Anchors on later levels</li>
+              </ul>
+              <p>The better the construction, the higher your Builder Rating.</p>
+            </div>
+            <div class="how-to-play-section">
+              <h3>Legend</h3>
+              <dl class="legend-list">
+                <div>
+                  <dt><span class="legend-swatch legend-target"></span>Target Area</dt>
+                </div>
+                <div>
+                  <dt><span class="legend-swatch legend-required"></span>Required Anchor</dt>
+                </div>
+                <div>
+                  <dt><span class="legend-swatch legend-block"></span>Your Blocks</dt>
+                </div>
+                <div>
+                  <dt><span class="legend-swatch legend-mistake"></span>Mistake Cells</dt>
+                </div>
+              </dl>
+            </div>
+            <div class="how-to-play-section">
+              <h3>Controls</h3>
+              <dl class="how-to-play-controls">
+                <div>
+                  <dt>&larr; &rarr;</dt>
+                  <dd>Move</dd>
+                </div>
+                <div>
+                  <dt>&uarr;</dt>
+                  <dd>Rotate</dd>
+                </div>
+                <div>
+                  <dt>&darr;</dt>
+                  <dd>Soft Drop</dd>
+                </div>
+                <div>
+                  <dt>Space</dt>
+                  <dd>Hard Drop</dd>
+                </div>
+                <div>
+                  <dt>P</dt>
+                  <dd>Pause</dd>
+                </div>
+                <div>
+                  <dt>R</dt>
+                  <dd>Restart Level</dd>
+                </div>
+              </dl>
+            </div>
+            <button type="button" id="how-to-play-back-button">Back</button>
           </div>
         </div>
         <div id="level-complete-overlay" class="level-complete-overlay hidden">
@@ -64,6 +131,24 @@
             <p>Rating: <strong id="final-rating">Builder</strong></p>
             <p>Score: <strong id="final-score">0</strong></p>
             <button type="button" id="next-level-button">Next Level</button>
+          </div>
+        </div>
+        <div id="level-brief-overlay" class="level-complete-overlay level-brief-overlay hidden">
+          <div class="overlay-panel level-brief-panel" role="dialog" aria-labelledby="level-brief-title">
+            <p class="brief-kicker">Level <span id="brief-level-number">1</span></p>
+            <h2 id="level-brief-title">Small House</h2>
+            <div id="brief-preview" class="brief-preview" aria-label="Building preview"></div>
+            <dl class="brief-copy">
+              <div>
+                <dt>Objective</dt>
+                <dd id="brief-objective">Build at least 80% of the house.</dd>
+              </div>
+              <div>
+                <dt>Hint</dt>
+                <dd id="brief-hint">Start with the roof and outer walls.</dd>
+              </div>
+            </dl>
+            <button type="button" id="start-building-button">Start Building</button>
           </div>
         </div>
         <div id="game-over-overlay" class="level-complete-overlay hidden">

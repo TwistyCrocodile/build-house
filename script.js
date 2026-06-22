@@ -10,13 +10,23 @@ const levelNameElement = document.querySelector("#level-name");
 const mainMenuOverlay = document.querySelector("#main-menu-overlay");
 const startGameButton = document.querySelector("#start-game-button");
 const continueGameButton = document.querySelector("#continue-game-button");
+const howToPlayButton = document.querySelector("#how-to-play-button");
 const menuResetRecordsButton = document.querySelector("#menu-reset-records-button");
+const howToPlayOverlay = document.querySelector("#how-to-play-overlay");
+const howToPlayBackButton = document.querySelector("#how-to-play-back-button");
 const levelCompleteOverlay = document.querySelector("#level-complete-overlay");
 const finalAccuracyElement = document.querySelector("#final-accuracy");
 const finalCompletionElement = document.querySelector("#final-completion");
 const finalRatingElement = document.querySelector("#final-rating");
 const finalScoreElement = document.querySelector("#final-score");
 const nextLevelButton = document.querySelector("#next-level-button");
+const levelBriefOverlay = document.querySelector("#level-brief-overlay");
+const briefLevelNumberElement = document.querySelector("#brief-level-number");
+const levelBriefTitleElement = document.querySelector("#level-brief-title");
+const briefObjectiveElement = document.querySelector("#brief-objective");
+const briefHintElement = document.querySelector("#brief-hint");
+const briefPreviewElement = document.querySelector("#brief-preview");
+const startBuildingButton = document.querySelector("#start-building-button");
 const gameOverOverlay = document.querySelector("#game-over-overlay");
 const gameOverScoreElement = document.querySelector("#game-over-score");
 const gameOverAccuracyElement = document.querySelector("#game-over-accuracy");
@@ -101,6 +111,9 @@ const tetrisPieces = [
 const levels = [
   {
     name: "Small House",
+    objective:
+      "Build at least 80% of the house. The level ends when no more blocks can be placed. There are no required blueprint anchors.",
+    hint: "Start with the roof and outer walls.",
     // Level maps use "." for empty, "#" for target, "R" for required target, and "O" for outline-only cells.
     map: [
       "..........",
@@ -125,6 +138,8 @@ const levels = [
   },
   {
     name: "House With Extension",
+    objective: "Finish the main house before the extension.",
+    hint: "Finish the main house before the extension.",
     map: [
       "..........",
       "..........",
@@ -148,6 +163,8 @@ const levels = [
   },
   {
     name: "House With Tower",
+    objective: "Build the tower from the bottom.",
+    hint: "Build the tower from the bottom.",
     map: [
       "..........",
       "..........",
@@ -171,6 +188,8 @@ const levels = [
   },
   {
     name: "Church",
+    objective: "Focus on the tall center first.",
+    hint: "Focus on the tall center first.",
     map: [
       "..........",
       "....#.....",
@@ -194,6 +213,8 @@ const levels = [
   },
   {
     name: "Windmill",
+    objective: "Build the center before the blades. Fill all Required Blueprint Anchors.",
+    hint: "Build the center before the blades.",
     map: [
       "..........",
       "....#.....",
@@ -217,6 +238,8 @@ const levels = [
   },
   {
     name: "Castle",
+    objective: "Secure the towers before filling the walls. Fill all Required Blueprint Anchors.",
+    hint: "Secure the towers before filling the walls.",
     map: [
       "..........",
       ".R#....#R.",
@@ -263,6 +286,8 @@ let isLevelComplete = false;
 let isGameComplete = false;
 let isMainMenuOpen = true;
 let isGameOverOverlayOpen = false;
+let isLevelBriefOpen = false;
+let isHowToPlayOpen = false;
 let hasStartedGame = false;
 let currentLevelTotalsAdded = false;
 let fallIntervalId = null;
@@ -592,6 +617,35 @@ function getCurrentLevel() {
   return levels[currentLevelIndex];
 }
 
+function renderBriefPreview(level) {
+  const parsedLevel = parseLevelMap(level.map);
+
+  briefPreviewElement.innerHTML = "";
+
+  for (let row = 0; row < gridRows; row += 1) {
+    for (let column = 0; column < gridColumns; column += 1) {
+      const cell = document.createElement("div");
+      const cellKey = `${column}-${row}`;
+
+      cell.className = "brief-preview-cell";
+
+      if (parsedLevel.targetCells.has(cellKey)) {
+        cell.classList.add("target-cell");
+      }
+
+      if (parsedLevel.outlineCells.has(cellKey)) {
+        cell.classList.add("outline");
+      }
+
+      if (parsedLevel.requiredCells.has(cellKey)) {
+        cell.classList.add("required-cell");
+      }
+
+      briefPreviewElement.appendChild(cell);
+    }
+  }
+}
+
 function loadCurrentLevel() {
   const level = getCurrentLevel();
   const displayedLevelNumber = currentLevelIndex + 1;
@@ -630,6 +684,8 @@ function getPieceCells(piece = currentPiece, position = currentPiecePosition) {
 function getGhostPieceCells() {
   if (
     isMainMenuOpen ||
+    isLevelBriefOpen ||
+    isHowToPlayOpen ||
     isPaused ||
     isGameOver ||
     isLevelComplete ||
@@ -717,7 +773,14 @@ function renderGrid() {
 }
 
 function spawnPiece() {
-  if (isMainMenuOpen || isGameOver || isLevelComplete || isGameComplete) {
+  if (
+    isMainMenuOpen ||
+    isLevelBriefOpen ||
+    isHowToPlayOpen ||
+    isGameOver ||
+    isLevelComplete ||
+    isGameComplete
+  ) {
     return;
   }
 
@@ -770,6 +833,8 @@ function canPlacePiece(piece = currentPiece, position = currentPiecePosition) {
 function movePiece(columnOffset, rowOffset) {
   if (
     isMainMenuOpen ||
+    isLevelBriefOpen ||
+    isHowToPlayOpen ||
     isPaused ||
     isGameOver ||
     isLevelComplete ||
@@ -796,6 +861,8 @@ function movePiece(columnOffset, rowOffset) {
 function rotatePiece() {
   if (
     isMainMenuOpen ||
+    isLevelBriefOpen ||
+    isHowToPlayOpen ||
     isPaused ||
     isGameOver ||
     isLevelComplete ||
@@ -948,6 +1015,8 @@ function showLevelCompleteAfterDelay() {
 function dropPieceOneCell() {
   if (
     isMainMenuOpen ||
+    isLevelBriefOpen ||
+    isHowToPlayOpen ||
     isPaused ||
     isGameOver ||
     isLevelComplete ||
@@ -968,6 +1037,8 @@ function dropPieceOneCell() {
 function softDropPiece() {
   if (
     isMainMenuOpen ||
+    isLevelBriefOpen ||
+    isHowToPlayOpen ||
     isPaused ||
     isGameOver ||
     isLevelComplete ||
@@ -990,6 +1061,8 @@ function softDropPiece() {
 function hardDrop() {
   if (
     isMainMenuOpen ||
+    isLevelBriefOpen ||
+    isHowToPlayOpen ||
     isPaused ||
     isGameOver ||
     isLevelComplete ||
@@ -1176,6 +1249,8 @@ function startAutoFall() {
 
   if (
     !isMainMenuOpen &&
+    !isLevelBriefOpen &&
+    !isHowToPlayOpen &&
     !isPaused &&
     !isGameOver &&
     !isLevelComplete &&
@@ -1235,9 +1310,47 @@ function hideGameCompleteOverlay() {
   gameCompleteOverlay.classList.add("hidden");
 }
 
+function showHowToPlay() {
+  stopAutoFall();
+  isHowToPlayOpen = true;
+  isMainMenuOpen = true;
+  setStatusMessage("");
+  mainMenuOverlay.classList.remove("hidden");
+  howToPlayOverlay.classList.remove("hidden");
+}
+
+function hideHowToPlay() {
+  isHowToPlayOpen = false;
+  howToPlayOverlay.classList.add("hidden");
+}
+
+function showLevelBrief() {
+  const level = getCurrentLevel();
+  const displayedLevelNumber = currentLevelIndex + 1;
+
+  loadCurrentLevel();
+  stopAutoFall();
+  isLevelBriefOpen = true;
+  briefLevelNumberElement.textContent = displayedLevelNumber;
+  levelBriefTitleElement.textContent = level.name;
+  briefObjectiveElement.textContent = level.objective;
+  briefHintElement.textContent = level.hint;
+  renderBriefPreview(level);
+  renderGrid();
+  setStatusMessage("");
+  levelBriefOverlay.classList.remove("hidden");
+}
+
+function hideLevelBrief() {
+  isLevelBriefOpen = false;
+  levelBriefOverlay.classList.add("hidden");
+}
+
 function showMainMenu() {
   isMainMenuOpen = true;
   stopAutoFall();
+  hideHowToPlay();
+  hideLevelBrief();
   hideLevelCompleteOverlay();
   hideGameOverOverlay();
   hideGameCompleteOverlay();
@@ -1247,6 +1360,7 @@ function showMainMenu() {
 
 function hideMainMenu() {
   isMainMenuOpen = false;
+  hideHowToPlay();
   mainMenuOverlay.classList.add("hidden");
 }
 
@@ -1257,7 +1371,7 @@ function startNewGameFromMenu() {
   resetLevelState();
   hideMainMenu();
   hasStartedGame = true;
-  startGame();
+  showLevelBrief();
 }
 
 function retryCurrentLevelAfterGameOver() {
@@ -1275,7 +1389,7 @@ function continueGameFromMenu() {
     recalculateTotals();
     resetLevelState();
     hasStartedGame = true;
-    startGame();
+    showLevelBrief();
     return;
   }
 
@@ -1317,7 +1431,7 @@ function goToNextLevelDev() {
 
   currentLevelIndex = nextLevelIndex;
   resetLevelState(true);
-  startGame();
+  showLevelBrief();
 }
 
 function showFinalScreenDev() {
@@ -1331,6 +1445,7 @@ function showFinalScreenDev() {
   stopAutoFall();
   hideLevelCompleteOverlay();
   hideGameOverOverlay();
+  hideLevelBrief();
   hideMainMenu();
   setStatusMessage("");
   const finalRecord = saveFinalRecord();
@@ -1361,7 +1476,7 @@ function handleNextLevel() {
 
   currentLevelIndex = nextLevelIndex;
   resetLevelState(true);
-  startGame();
+  showLevelBrief();
 }
 
 function resetLevelState(keepCompletedTotal = false) {
@@ -1383,6 +1498,7 @@ function resetLevelState(keepCompletedTotal = false) {
   isLevelComplete = false;
   isGameComplete = false;
   currentLevelTotalsAdded = false;
+  hideLevelBrief();
   hideLevelCompleteOverlay();
   hideGameOverOverlay();
   hideGameCompleteOverlay();
@@ -1394,6 +1510,7 @@ function resetLevelState(keepCompletedTotal = false) {
 function startGame() {
   hasStartedGame = true;
   loadCurrentLevel();
+  hideLevelBrief();
   hideLevelCompleteOverlay();
   hideGameOverOverlay();
   setStatusMessage("");
@@ -1416,11 +1533,18 @@ function restartWholeGame() {
   completedLevelTotals.clear();
   recalculateTotals();
   resetLevelState();
-  startGame();
+  showLevelBrief();
 }
 
 function togglePause() {
-  if (isMainMenuOpen || isGameOver || isLevelComplete || isGameComplete) {
+  if (
+    isMainMenuOpen ||
+    isLevelBriefOpen ||
+    isHowToPlayOpen ||
+    isGameOver ||
+    isLevelComplete ||
+    isGameComplete
+  ) {
     return;
   }
 
@@ -1442,6 +1566,15 @@ function handleAction(action) {
     return;
   }
 
+  if (action === "closeHowToPlay") {
+    hideHowToPlay();
+    return;
+  }
+
+  if (isHowToPlayOpen) {
+    return;
+  }
+
   if (action === "resetRecords") {
     resetRecords();
     return;
@@ -1449,6 +1582,19 @@ function handleAction(action) {
 
   if (action === "startGame") {
     startNewGameFromMenu();
+    return;
+  }
+
+  if (action === "howToPlay") {
+    showHowToPlay();
+    return;
+  }
+
+  if (action === "startBuilding") {
+    if (isLevelBriefOpen) {
+      startGame();
+    }
+
     return;
   }
 
@@ -1510,7 +1656,7 @@ function handleAction(action) {
     return;
   }
 
-  if (isPaused || isGameOver || isLevelComplete || isGameComplete) {
+  if (isPaused || isHowToPlayOpen || isGameOver || isLevelComplete || isGameComplete) {
     return;
   }
 
@@ -1552,6 +1698,24 @@ function handleAction(action) {
 }
 
 function handleKeyboardInput(event) {
+  if (isHowToPlayOpen) {
+    if (event.key === "Escape" || event.key === "Enter") {
+      event.preventDefault();
+      handleAction("closeHowToPlay");
+    }
+
+    return;
+  }
+
+  if (isLevelBriefOpen) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleAction("startBuilding");
+    }
+
+    return;
+  }
+
   if (isMainMenuOpen) {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -1618,6 +1782,9 @@ controls.forEach((button) => {
 nextLevelButton.addEventListener("click", () => {
   handleAction("nextLevel");
 });
+startBuildingButton.addEventListener("click", () => {
+  handleAction("startBuilding");
+});
 tryAgainButton.addEventListener("click", () => {
   handleAction("tryAgain");
 });
@@ -1635,6 +1802,12 @@ startGameButton.addEventListener("click", () => {
 });
 continueGameButton.addEventListener("click", () => {
   handleAction("continueGame");
+});
+howToPlayButton.addEventListener("click", () => {
+  handleAction("howToPlay");
+});
+howToPlayBackButton.addEventListener("click", () => {
+  handleAction("closeHowToPlay");
 });
 menuResetRecordsButton.addEventListener("click", () => {
   handleAction("resetRecords");
