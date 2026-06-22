@@ -182,7 +182,7 @@ h1 {
 }
 
 .game-grid::after {
-  content: "PLAN 10 x 18";
+  content: attr(data-plan-label);
   inset: auto 9px 7px auto;
   color: rgba(215, 229, 238, 0.38);
   font-size: 0.58rem;

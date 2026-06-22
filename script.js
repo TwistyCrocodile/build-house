@@ -40,6 +40,7 @@ const totalAccuracyElement = document.querySelector("#total-accuracy");
 const playAgainButton = document.querySelector("#play-again-button");
 const mainMenuButton = document.querySelector("#main-menu-button");
 const soundToggleButton = document.querySelector("#sound-toggle");
+const languageToggleButton = document.querySelector("#language-toggle");
 const resetRecordsButton = document.querySelector("#reset-records-button");
 const bestScoreElement = document.querySelector("#best-score");
 const bestAccuracyElement = document.querySelector("#best-accuracy");
@@ -56,6 +57,197 @@ const storagePrefix = "buildTheHouse";
 const settingsStorageKey = `${storagePrefix}:settings`;
 const levelRecordsStorageKey = `${storagePrefix}:levelRecords`;
 const finalRecordStorageKey = `${storagePrefix}:finalRecord`;
+
+const translations = {
+  en: {
+    "app.title": "Build the House",
+    "blueprint.plan": "PLAN 10 x 18",
+    "menu.subtitle": "Architectural block puzzle",
+    "stats.level": "Level",
+    "stats.score": "Score",
+    "stats.accuracy": "Accuracy",
+    "stats.completion": "Completion",
+    "stats.requiredAnchors": "Required Anchors",
+    "stats.bestScore": "Best Score",
+    "stats.bestAccuracy": "Best Accuracy",
+    "stats.rating": "Rating",
+    "stats.finalScore": "Final Score",
+    "stats.finalAccuracy": "Final Accuracy",
+    "stats.bestFinalScore": "Best Final Score",
+    "stats.bestFinalAccuracy": "Best Final Accuracy",
+    "buttons.soundOn": "Sound: On",
+    "buttons.soundOff": "Sound: Off",
+    "buttons.language": "Language: EN",
+    "buttons.startGame": "Start Game",
+    "buttons.continue": "Continue",
+    "buttons.howToPlay": "How To Play",
+    "buttons.resetRecords": "Reset Records",
+    "buttons.startBuilding": "Start Building",
+    "buttons.nextLevel": "Next Level",
+    "buttons.tryAgain": "Try Again",
+    "buttons.mainMenu": "Main Menu",
+    "buttons.playAgain": "Play Again",
+    "buttons.back": "Back",
+    "buttons.left": "Left",
+    "buttons.rotate": "Rotate",
+    "buttons.right": "Right",
+    "buttons.drop": "Drop",
+    "overlays.howToPlay": "How to Play",
+    "overlays.levelComplete": "Level Complete",
+    "overlays.gameOver": "Game Over",
+    "overlays.gameComplete": "Building Collection Complete",
+    "gameOver.body": "The building plan collapsed.",
+    "how.title": "How to Play",
+    "how.rule1": "Build the blueprint using falling blocks.",
+    "how.rule2": "Place pieces inside the highlighted building area.",
+    "how.rule3": "The game continues until there is no room for another piece.",
+    "how.rule4": "When the run ends, the blueprint is evaluated.",
+    "how.passTitle": "To pass a level",
+    "how.pass1": "build at least 80% of the blueprint",
+    "how.pass2": "fill all Required Blueprint Anchors on later levels",
+    "how.rating": "The better the construction, the higher your Builder Rating.",
+    "how.legendTitle": "Legend",
+    "legend.target": "Target Area",
+    "legend.required": "Required Anchor",
+    "legend.blocks": "Your Blocks",
+    "legend.mistakes": "Mistake Cells",
+    "controls.title": "Controls",
+    "controls.move": "Move",
+    "controls.rotate": "Rotate",
+    "controls.softDrop": "Soft Drop",
+    "controls.hardDrop": "Hard Drop",
+    "controls.pause": "Pause",
+    "controls.restart": "Restart",
+    "controls.restartLevel": "Restart Level",
+    "brief.objective": "Objective",
+    "brief.hint": "Hint",
+    "messages.paused": "Paused",
+    "messages.gameOver": "Game Over",
+    "messages.levelComplete": "Level Complete",
+    "messages.recordsReset": "Saved records reset",
+    "messages.mainMenuComingSoon": "Main menu coming soon",
+    "ratings.masterBuilder": "Master Builder",
+    "ratings.architect": "Architect",
+    "ratings.builder": "Builder",
+    "ratings.apprentice": "Apprentice",
+    "ratings.failedProject": "Failed Project",
+    "levels.smallHouse.name": "Small House",
+    "levels.smallHouse.objective":
+      "Build at least 80% of the house. The level ends when no more blocks can be placed. There are no required blueprint anchors.",
+    "levels.smallHouse.hint": "Start with the roof and outer walls.",
+    "levels.extension.name": "House With Extension",
+    "levels.extension.objective": "Finish the main house before the extension.",
+    "levels.extension.hint": "Finish the main house before the extension.",
+    "levels.tower.name": "House With Tower",
+    "levels.tower.objective": "Build the tower from the bottom.",
+    "levels.tower.hint": "Build the tower from the bottom.",
+    "levels.church.name": "Church",
+    "levels.church.objective": "Focus on the tall center first.",
+    "levels.church.hint": "Focus on the tall center first.",
+    "levels.windmill.name": "Windmill",
+    "levels.windmill.objective":
+      "Build the center before the blades. Fill all Required Blueprint Anchors.",
+    "levels.windmill.hint": "Build the center before the blades.",
+    "levels.castle.name": "Castle",
+    "levels.castle.objective":
+      "Secure the towers before filling the walls. Fill all Required Blueprint Anchors.",
+    "levels.castle.hint": "Secure the towers before filling the walls.",
+  },
+  ru: {
+    "app.title": "Build the House",
+    "blueprint.plan": "ПЛАН 10 x 18",
+    "menu.subtitle": "Архитектурная головоломка с блоками",
+    "stats.level": "Уровень",
+    "stats.score": "Очки",
+    "stats.accuracy": "Точность",
+    "stats.completion": "Заполнение",
+    "stats.requiredAnchors": "Обязательные клетки",
+    "stats.bestScore": "Лучшие очки",
+    "stats.bestAccuracy": "Лучшая точность",
+    "stats.rating": "Оценка строительства",
+    "stats.finalScore": "Итоговые очки",
+    "stats.finalAccuracy": "Итоговая точность",
+    "stats.bestFinalScore": "Лучшие итоговые очки",
+    "stats.bestFinalAccuracy": "Лучшая итоговая точность",
+    "buttons.soundOn": "Звук: вкл.",
+    "buttons.soundOff": "Звук: выкл.",
+    "buttons.language": "Language: RU",
+    "buttons.startGame": "Начать игру",
+    "buttons.continue": "Продолжить",
+    "buttons.howToPlay": "Как играть",
+    "buttons.resetRecords": "Сбросить рекорды",
+    "buttons.startBuilding": "Начать уровень",
+    "buttons.nextLevel": "Далее",
+    "buttons.tryAgain": "Попробовать снова",
+    "buttons.mainMenu": "Главное меню",
+    "buttons.playAgain": "Новая игра",
+    "buttons.back": "Назад",
+    "buttons.left": "Влево",
+    "buttons.rotate": "Поворот",
+    "buttons.right": "Вправо",
+    "buttons.drop": "Вниз",
+    "overlays.howToPlay": "Как играть",
+    "overlays.levelComplete": "Уровень пройден",
+    "overlays.gameOver": "Стройка завершена",
+    "overlays.gameComplete": "Коллекция построек завершена",
+    "gameOver.body": "Строительство остановлено.",
+    "how.title": "Как играть",
+    "how.rule1": "Размещайте падающие фигуры внутри области строительства.",
+    "how.rule2": "Заполняйте клетки чертежа и старайтесь не выходить за его границы.",
+    "how.rule3": "Уровень продолжается, пока на поле есть место для новой фигуры.",
+    "how.rule4": "Когда место заканчивается, игра оценивает готовую постройку.",
+    "how.passTitle": "Чтобы пройти уровень",
+    "how.pass1": "заполните не менее 80% чертежа",
+    "how.pass2": "на поздних уровнях заполните все обязательные клетки",
+    "how.rating": "Чем аккуратнее постройка, тем выше оценка строительства.",
+    "how.legendTitle": "Легенда",
+    "legend.target": "Область строительства",
+    "legend.required": "Обязательная клетка",
+    "legend.blocks": "Ваши блоки",
+    "legend.mistakes": "Ошибочные клетки",
+    "controls.title": "Управление",
+    "controls.move": "Движение",
+    "controls.rotate": "Поворот",
+    "controls.softDrop": "Ускорить падение",
+    "controls.hardDrop": "Быстро поставить",
+    "controls.pause": "Пауза",
+    "controls.restart": "Перезапуск",
+    "controls.restartLevel": "Перезапуск уровня",
+    "brief.objective": "Цель",
+    "brief.hint": "Совет",
+    "messages.paused": "Пауза",
+    "messages.gameOver": "Стройка завершена",
+    "messages.levelComplete": "Уровень пройден",
+    "messages.recordsReset": "Рекорды сброшены",
+    "messages.mainMenuComingSoon": "Главное меню скоро появится",
+    "ratings.masterBuilder": "Легендарный строитель",
+    "ratings.architect": "Архитектор",
+    "ratings.builder": "Опытный строитель",
+    "ratings.apprentice": "Начинающий строитель",
+    "ratings.failedProject": "Проект не завершён",
+    "levels.smallHouse.name": "Маленький дом",
+    "levels.smallHouse.objective":
+      "Заполните не менее 80% чертежа. На этом уровне нет обязательных клеток.",
+    "levels.smallHouse.hint": "Сначала соберите крышу и внешние стены, затем заполняйте середину.",
+    "levels.extension.name": "Дом с пристройкой",
+    "levels.extension.objective": "Сначала достройте основной дом, затем переходите к пристройке.",
+    "levels.extension.hint": "Не растягивайте основание слишком рано: пристройку удобнее закрывать в конце.",
+    "levels.tower.name": "Дом с башней",
+    "levels.tower.objective": "Соберите башню снизу вверх, чтобы верхние клетки не остались без опоры.",
+    "levels.tower.hint": "Держите центр устойчивым и не перекрывайте место под башню.",
+    "levels.church.name": "Церковь",
+    "levels.church.objective": "Постройте высокий шпиль первым, затем переходите к основанию.",
+    "levels.church.hint": "Начните с узкого центра: широкий низ проще заполнить позже.",
+    "levels.windmill.name": "Мельница",
+    "levels.windmill.objective":
+      "Сначала соберите центр мельницы, затем аккуратно достройте лопасти. Заполните все обязательные клетки.",
+    "levels.windmill.hint": "Обязательные клетки в центре помогут удержать форму лопастей.",
+    "levels.castle.name": "Замок",
+    "levels.castle.objective":
+      "Сначала постройте башни, затем соедините их стенами. Заполните все обязательные клетки.",
+    "levels.castle.hint": "Закрепите углы и верх башен, прежде чем закрывать широкие стены.",
+  },
+};
 
 const tetrisPieces = [
   {
@@ -111,6 +303,7 @@ const tetrisPieces = [
 const levels = [
   {
     name: "Small House",
+    translationKey: "levels.smallHouse",
     objective:
       "Build at least 80% of the house. The level ends when no more blocks can be placed. There are no required blueprint anchors.",
     hint: "Start with the roof and outer walls.",
@@ -138,6 +331,7 @@ const levels = [
   },
   {
     name: "House With Extension",
+    translationKey: "levels.extension",
     objective: "Finish the main house before the extension.",
     hint: "Finish the main house before the extension.",
     map: [
@@ -163,6 +357,7 @@ const levels = [
   },
   {
     name: "House With Tower",
+    translationKey: "levels.tower",
     objective: "Build the tower from the bottom.",
     hint: "Build the tower from the bottom.",
     map: [
@@ -188,6 +383,7 @@ const levels = [
   },
   {
     name: "Church",
+    translationKey: "levels.church",
     objective: "Focus on the tall center first.",
     hint: "Focus on the tall center first.",
     map: [
@@ -213,6 +409,7 @@ const levels = [
   },
   {
     name: "Windmill",
+    translationKey: "levels.windmill",
     objective: "Build the center before the blades. Fill all Required Blueprint Anchors.",
     hint: "Build the center before the blades.",
     map: [
@@ -238,6 +435,7 @@ const levels = [
   },
   {
     name: "Castle",
+    translationKey: "levels.castle",
     objective: "Secure the towers before filling the walls. Fill all Required Blueprint Anchors.",
     hint: "Secure the towers before filling the walls.",
     map: [
@@ -297,7 +495,54 @@ let levelCompleteGlowTimeoutId = null;
 let levelCompleteOverlayTimeoutId = null;
 let audioContext = null;
 let isSoundMuted = false;
+let currentLanguage = "en";
+let currentStatusMessageKey = "";
 let hasUserInteracted = false;
+
+function t(key) {
+  return translations[currentLanguage]?.[key] || translations.en[key] || key;
+}
+
+function getLocalizedLevelText(level, field) {
+  return t(`${level.translationKey}.${field}`);
+}
+
+function setLanguage(language) {
+  currentLanguage = language === "ru" ? "ru" : "en";
+  saveSettings();
+  updateTexts();
+}
+
+function toggleLanguage() {
+  setLanguage(currentLanguage === "en" ? "ru" : "en");
+}
+
+function updateTexts() {
+  document.documentElement.lang = currentLanguage;
+  document.title = t("app.title");
+  gridElement.dataset.planLabel = t("blueprint.plan");
+
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    element.textContent = t(element.dataset.i18n);
+  });
+
+  updateSoundToggleLabel();
+  updateLanguageToggleLabel();
+  loadCurrentLevel();
+  updateStatusMessageDisplay();
+
+  if (isLevelBriefOpen) {
+    updateLevelBriefText();
+  }
+
+  if (!levelCompleteOverlay.classList.contains("hidden")) {
+    updateLevelCompleteOverlay();
+  }
+
+  if (isGameOverOverlayOpen) {
+    updateGameOverOverlay();
+  }
+}
 
 function readStoredJson(key, fallbackValue) {
   try {
@@ -320,11 +565,13 @@ function writeStoredJson(key, value) {
 function loadSettings() {
   const settings = readStoredJson(settingsStorageKey, {});
   isSoundMuted = settings.soundMuted === true;
+  currentLanguage = settings.language === "ru" ? "ru" : "en";
 }
 
 function saveSettings() {
   writeStoredJson(settingsStorageKey, {
     soundMuted: isSoundMuted,
+    language: currentLanguage,
   });
 }
 
@@ -411,7 +658,7 @@ function resetRecords() {
     bestFinalScore: 0,
     bestFinalAccuracy: 0,
   });
-  setStatusMessage("Saved records reset");
+  setStatusMessage("messages.recordsReset");
 }
 
 function initAudio() {
@@ -524,8 +771,12 @@ function playGameCompleteSound() {
 }
 
 function updateSoundToggleLabel() {
-  soundToggleButton.textContent = isSoundMuted ? "Sound: Off" : "Sound: On";
+  soundToggleButton.textContent = isSoundMuted ? t("buttons.soundOff") : t("buttons.soundOn");
   soundToggleButton.setAttribute("aria-pressed", String(!isSoundMuted));
+}
+
+function updateLanguageToggleLabel() {
+  languageToggleButton.textContent = t("buttons.language");
 }
 
 function toggleSound() {
@@ -656,7 +907,7 @@ function loadCurrentLevel() {
   requiredCells = parsedLevel.requiredCells;
   levelElement.textContent = displayedLevelNumber;
   levelNameNumberElement.textContent = displayedLevelNumber;
-  levelNameElement.textContent = level.name;
+  levelNameElement.textContent = getLocalizedLevelText(level, "name");
   updateBestStatsDisplay();
 }
 
@@ -804,7 +1055,7 @@ function spawnPiece() {
       completeCurrentLevel();
     } else {
       isGameOver = true;
-      setStatusMessage("Game Over");
+      setStatusMessage("messages.gameOver");
       showGameOverOverlay();
     }
   }
@@ -1144,22 +1395,22 @@ function areRequiredCellsFilled() {
 
 function getBuilderRating(completionPercent) {
   if (completionPercent >= 95) {
-    return "Master Builder";
+    return t("ratings.masterBuilder");
   }
 
   if (completionPercent >= 85) {
-    return "Architect";
+    return t("ratings.architect");
   }
 
   if (completionPercent >= 80) {
-    return "Builder";
+    return t("ratings.builder");
   }
 
   if (completionPercent >= 60) {
-    return "Apprentice";
+    return t("ratings.apprentice");
   }
 
-  return "Failed Project";
+  return t("ratings.failedProject");
 }
 
 function calculateFinalAccuracy() {
@@ -1238,7 +1489,7 @@ function completeCurrentLevel() {
   currentPiece = null;
   isLevelComplete = true;
   stopAutoFall();
-  setStatusMessage("Level Complete");
+  setStatusMessage("messages.levelComplete");
   playLevelCompleteSound();
   triggerLevelCompleteFeedback();
   showLevelCompleteAfterDelay();
@@ -1267,16 +1518,26 @@ function stopAutoFall() {
   }
 }
 
-function setStatusMessage(message) {
-  statusMessage.textContent = message;
+function updateStatusMessageDisplay() {
+  statusMessage.textContent = currentStatusMessageKey ? t(currentStatusMessageKey) : "";
 }
 
-function showLevelCompleteOverlay() {
+function setStatusMessage(messageKey) {
+  currentStatusMessageKey = messageKey;
+  updateStatusMessageDisplay();
+}
+
+function updateLevelCompleteOverlay() {
   const completionPercent = calculateCompletion();
+
   finalAccuracyElement.textContent = `${calculateAccuracy()}%`;
   finalCompletionElement.textContent = `${completionPercent}%`;
   finalRatingElement.textContent = getBuilderRating(completionPercent);
   finalScoreElement.textContent = score;
+}
+
+function showLevelCompleteOverlay() {
+  updateLevelCompleteOverlay();
   levelCompleteOverlay.classList.remove("hidden");
 }
 
@@ -1284,12 +1545,17 @@ function hideLevelCompleteOverlay() {
   levelCompleteOverlay.classList.add("hidden");
 }
 
-function showGameOverOverlay() {
+function updateGameOverOverlay() {
   const completionPercent = calculateCompletion();
+
   gameOverScoreElement.textContent = score;
   gameOverAccuracyElement.textContent = `${calculateAccuracy()}%`;
   gameOverCompletionElement.textContent = `${completionPercent}%`;
   gameOverRatingElement.textContent = getBuilderRating(completionPercent);
+}
+
+function showGameOverOverlay() {
+  updateGameOverOverlay();
   isGameOverOverlayOpen = true;
   gameOverOverlay.classList.remove("hidden");
 }
@@ -1310,6 +1576,14 @@ function hideGameCompleteOverlay() {
   gameCompleteOverlay.classList.add("hidden");
 }
 
+function updateLevelBriefText() {
+  const level = getCurrentLevel();
+
+  levelBriefTitleElement.textContent = getLocalizedLevelText(level, "name");
+  briefObjectiveElement.textContent = getLocalizedLevelText(level, "objective");
+  briefHintElement.textContent = getLocalizedLevelText(level, "hint");
+}
+
 function showHowToPlay() {
   stopAutoFall();
   isHowToPlayOpen = true;
@@ -1325,17 +1599,14 @@ function hideHowToPlay() {
 }
 
 function showLevelBrief() {
-  const level = getCurrentLevel();
   const displayedLevelNumber = currentLevelIndex + 1;
 
   loadCurrentLevel();
   stopAutoFall();
   isLevelBriefOpen = true;
   briefLevelNumberElement.textContent = displayedLevelNumber;
-  levelBriefTitleElement.textContent = level.name;
-  briefObjectiveElement.textContent = level.objective;
-  briefHintElement.textContent = level.hint;
-  renderBriefPreview(level);
+  updateLevelBriefText();
+  renderBriefPreview(getCurrentLevel());
   renderGrid();
   setStatusMessage("");
   levelBriefOverlay.classList.remove("hidden");
@@ -1549,7 +1820,7 @@ function togglePause() {
   }
 
   isPaused = !isPaused;
-  setStatusMessage(isPaused ? "Paused" : "");
+  setStatusMessage(isPaused ? "messages.paused" : "");
 
   if (isPaused) {
     stopAutoFall();
@@ -1563,6 +1834,11 @@ function handleAction(action) {
 
   if (action === "toggleSound") {
     toggleSound();
+    return;
+  }
+
+  if (action === "toggleLanguage") {
+    toggleLanguage();
     return;
   }
 
@@ -1815,15 +2091,17 @@ menuResetRecordsButton.addEventListener("click", () => {
 soundToggleButton.addEventListener("click", () => {
   handleAction("toggleSound");
 });
+languageToggleButton.addEventListener("click", () => {
+  handleAction("toggleLanguage");
+});
 resetRecordsButton.addEventListener("click", () => {
   handleAction("resetRecords");
 });
 document.addEventListener("keydown", handleKeyboardInput);
 
 loadSettings();
-updateSoundToggleLabel();
 updateFinalRecordDisplay();
-loadCurrentLevel();
 updateStats();
 renderGrid();
 showMainMenu();
+updateTexts();

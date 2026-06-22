@@ -9,38 +9,39 @@
   <body>
     <main class="game-container">
       <header class="game-header">
-        <h1>Build the House</h1>
+        <h1 data-i18n="app.title">Build the House</h1>
         <div class="header-actions">
           <button type="button" id="sound-toggle" class="small-control">Sound: On</button>
-          <button type="button" id="reset-records-button" class="small-control">Reset Records</button>
+          <button type="button" id="language-toggle" class="small-control">Language: EN</button>
+          <button type="button" id="reset-records-button" class="small-control" data-i18n="buttons.resetRecords">Reset Records</button>
         </div>
         <section class="stats" aria-label="Game stats">
           <div>
-            <span class="stat-label">Level</span>
+            <span class="stat-label" data-i18n="stats.level">Level</span>
             <strong id="level">1</strong>
           </div>
           <div>
-            <span class="stat-label">Score</span>
+            <span class="stat-label" data-i18n="stats.score">Score</span>
             <strong id="score">0</strong>
           </div>
           <div>
-            <span class="stat-label">Accuracy</span>
+            <span class="stat-label" data-i18n="stats.accuracy">Accuracy</span>
             <strong id="accuracy">0%</strong>
           </div>
           <div>
-            <span class="stat-label">Completion</span>
+            <span class="stat-label" data-i18n="stats.completion">Completion</span>
             <strong id="completion">0%</strong>
           </div>
           <div>
-            <span class="stat-label">Required</span>
+            <span class="stat-label" data-i18n="stats.requiredAnchors">Required Anchors</span>
             <strong id="required-progress">—</strong>
           </div>
         </section>
-        <p class="level-name">Level <span id="level-name-number">1</span>: <span id="level-name">Small House</span></p>
+        <p class="level-name"><span data-i18n="stats.level">Level</span> <span id="level-name-number">1</span>: <span id="level-name">Small House</span></p>
         <p class="best-stats">
-          Best Score: <strong id="best-score">0</strong>
+          <span data-i18n="stats.bestScore">Best Score</span>: <strong id="best-score">0</strong>
           <span aria-hidden="true">|</span>
-          Best Accuracy: <strong id="best-accuracy">0%</strong>
+          <span data-i18n="stats.bestAccuracy">Best Accuracy</span>: <strong id="best-accuracy">0%</strong>
         </p>
         <p id="status-message" class="status-message" aria-live="polite"></p>
       </header>
@@ -49,168 +50,168 @@
         <div id="game-grid" class="game-grid"></div>
         <div id="main-menu-overlay" class="level-complete-overlay main-menu-overlay">
           <div class="overlay-panel main-menu-panel" role="dialog" aria-labelledby="main-menu-title">
-            <h2 id="main-menu-title">Build the House</h2>
-            <p class="menu-subtitle">Architectural block puzzle</p>
-            <button type="button" id="start-game-button">Start Game</button>
-            <button type="button" id="continue-game-button">Continue</button>
-            <button type="button" id="how-to-play-button">How To Play</button>
-            <button type="button" id="menu-reset-records-button">Reset Records</button>
+            <h2 id="main-menu-title" data-i18n="app.title">Build the House</h2>
+            <p class="menu-subtitle" data-i18n="menu.subtitle">Architectural block puzzle</p>
+            <button type="button" id="start-game-button" data-i18n="buttons.startGame">Start Game</button>
+            <button type="button" id="continue-game-button" data-i18n="buttons.continue">Continue</button>
+            <button type="button" id="how-to-play-button" data-i18n="buttons.howToPlay">How To Play</button>
+            <button type="button" id="menu-reset-records-button" data-i18n="buttons.resetRecords">Reset Records</button>
           </div>
         </div>
         <div id="how-to-play-overlay" class="level-complete-overlay how-to-play-overlay hidden">
           <div class="overlay-panel how-to-play-panel" role="dialog" aria-labelledby="how-to-play-title">
-            <h2 id="how-to-play-title">How to Play</h2>
+            <h2 id="how-to-play-title" data-i18n="how.title">How to Play</h2>
             <div class="how-to-play-copy">
-              <p>Build the blueprint using falling blocks.</p>
-              <p>Place pieces inside the highlighted building area.</p>
-              <p>The game continues until there is no room for another piece.</p>
-              <p>When the run ends, the blueprint is evaluated.</p>
+              <p data-i18n="how.rule1">Build the blueprint using falling blocks.</p>
+              <p data-i18n="how.rule2">Place pieces inside the highlighted building area.</p>
+              <p data-i18n="how.rule3">The game continues until there is no room for another piece.</p>
+              <p data-i18n="how.rule4">When the run ends, the blueprint is evaluated.</p>
             </div>
             <div class="how-to-play-section">
-              <h3>To pass a level</h3>
+              <h3 data-i18n="how.passTitle">To pass a level</h3>
               <ul>
-                <li>build at least 80% of the blueprint</li>
-                <li>fill all Required Blueprint Anchors on later levels</li>
+                <li data-i18n="how.pass1">build at least 80% of the blueprint</li>
+                <li data-i18n="how.pass2">fill all Required Blueprint Anchors on later levels</li>
               </ul>
-              <p>The better the construction, the higher your Builder Rating.</p>
+              <p data-i18n="how.rating">The better the construction, the higher your Builder Rating.</p>
             </div>
             <div class="how-to-play-section">
-              <h3>Legend</h3>
+              <h3 data-i18n="how.legendTitle">Legend</h3>
               <dl class="legend-list">
                 <div>
-                  <dt><span class="legend-swatch legend-target"></span>Target Area</dt>
+                  <dt><span class="legend-swatch legend-target"></span><span data-i18n="legend.target">Target Area</span></dt>
                 </div>
                 <div>
-                  <dt><span class="legend-swatch legend-required"></span>Required Anchor</dt>
+                  <dt><span class="legend-swatch legend-required"></span><span data-i18n="legend.required">Required Anchor</span></dt>
                 </div>
                 <div>
-                  <dt><span class="legend-swatch legend-block"></span>Your Blocks</dt>
+                  <dt><span class="legend-swatch legend-block"></span><span data-i18n="legend.blocks">Your Blocks</span></dt>
                 </div>
                 <div>
-                  <dt><span class="legend-swatch legend-mistake"></span>Mistake Cells</dt>
+                  <dt><span class="legend-swatch legend-mistake"></span><span data-i18n="legend.mistakes">Mistake Cells</span></dt>
                 </div>
               </dl>
             </div>
             <div class="how-to-play-section">
-              <h3>Controls</h3>
+              <h3 data-i18n="controls.title">Controls</h3>
               <dl class="how-to-play-controls">
                 <div>
                   <dt>&larr; &rarr;</dt>
-                  <dd>Move</dd>
+                  <dd data-i18n="controls.move">Move</dd>
                 </div>
                 <div>
                   <dt>&uarr;</dt>
-                  <dd>Rotate</dd>
+                  <dd data-i18n="controls.rotate">Rotate</dd>
                 </div>
                 <div>
                   <dt>&darr;</dt>
-                  <dd>Soft Drop</dd>
+                  <dd data-i18n="controls.softDrop">Soft Drop</dd>
                 </div>
                 <div>
                   <dt>Space</dt>
-                  <dd>Hard Drop</dd>
+                  <dd data-i18n="controls.hardDrop">Hard Drop</dd>
                 </div>
                 <div>
                   <dt>P</dt>
-                  <dd>Pause</dd>
+                  <dd data-i18n="controls.pause">Pause</dd>
                 </div>
                 <div>
                   <dt>R</dt>
-                  <dd>Restart Level</dd>
+                  <dd data-i18n="controls.restartLevel">Restart Level</dd>
                 </div>
               </dl>
             </div>
-            <button type="button" id="how-to-play-back-button">Back</button>
+            <button type="button" id="how-to-play-back-button" data-i18n="buttons.back">Back</button>
           </div>
         </div>
         <div id="level-complete-overlay" class="level-complete-overlay hidden">
           <div class="overlay-panel" role="dialog" aria-labelledby="level-complete-title">
-            <h2 id="level-complete-title">Level Complete</h2>
-            <p>Accuracy: <strong id="final-accuracy">0%</strong></p>
-            <p>Completion: <strong id="final-completion">0%</strong></p>
-            <p>Rating: <strong id="final-rating">Builder</strong></p>
-            <p>Score: <strong id="final-score">0</strong></p>
-            <button type="button" id="next-level-button">Next Level</button>
+            <h2 id="level-complete-title" data-i18n="overlays.levelComplete">Level Complete</h2>
+            <p><span data-i18n="stats.accuracy">Accuracy</span>: <strong id="final-accuracy">0%</strong></p>
+            <p><span data-i18n="stats.completion">Completion</span>: <strong id="final-completion">0%</strong></p>
+            <p><span data-i18n="stats.rating">Rating</span>: <strong id="final-rating">Builder</strong></p>
+            <p><span data-i18n="stats.score">Score</span>: <strong id="final-score">0</strong></p>
+            <button type="button" id="next-level-button" data-i18n="buttons.nextLevel">Next Level</button>
           </div>
         </div>
         <div id="level-brief-overlay" class="level-complete-overlay level-brief-overlay hidden">
           <div class="overlay-panel level-brief-panel" role="dialog" aria-labelledby="level-brief-title">
-            <p class="brief-kicker">Level <span id="brief-level-number">1</span></p>
+            <p class="brief-kicker"><span data-i18n="stats.level">Level</span> <span id="brief-level-number">1</span></p>
             <h2 id="level-brief-title">Small House</h2>
             <div id="brief-preview" class="brief-preview" aria-label="Building preview"></div>
             <dl class="brief-copy">
               <div>
-                <dt>Objective</dt>
+                <dt data-i18n="brief.objective">Objective</dt>
                 <dd id="brief-objective">Build at least 80% of the house.</dd>
               </div>
               <div>
-                <dt>Hint</dt>
+                <dt data-i18n="brief.hint">Hint</dt>
                 <dd id="brief-hint">Start with the roof and outer walls.</dd>
               </div>
             </dl>
-            <button type="button" id="start-building-button">Start Building</button>
+            <button type="button" id="start-building-button" data-i18n="buttons.startBuilding">Start Building</button>
           </div>
         </div>
         <div id="game-over-overlay" class="level-complete-overlay hidden">
           <div class="overlay-panel" role="dialog" aria-labelledby="game-over-title">
-            <h2 id="game-over-title">Game Over</h2>
-            <p>The building plan collapsed.</p>
-            <p>Score: <strong id="game-over-score">0</strong></p>
-            <p>Accuracy: <strong id="game-over-accuracy">0%</strong></p>
-            <p>Completion: <strong id="game-over-completion">0%</strong></p>
-            <p>Rating: <strong id="game-over-rating">Failed Project</strong></p>
-            <button type="button" id="try-again-button">Try Again</button>
-            <button type="button" id="game-over-main-menu-button">Main Menu</button>
+            <h2 id="game-over-title" data-i18n="overlays.gameOver">Game Over</h2>
+            <p data-i18n="gameOver.body">The building plan collapsed.</p>
+            <p><span data-i18n="stats.score">Score</span>: <strong id="game-over-score">0</strong></p>
+            <p><span data-i18n="stats.accuracy">Accuracy</span>: <strong id="game-over-accuracy">0%</strong></p>
+            <p><span data-i18n="stats.completion">Completion</span>: <strong id="game-over-completion">0%</strong></p>
+            <p><span data-i18n="stats.rating">Rating</span>: <strong id="game-over-rating">Failed Project</strong></p>
+            <button type="button" id="try-again-button" data-i18n="buttons.tryAgain">Try Again</button>
+            <button type="button" id="game-over-main-menu-button" data-i18n="buttons.mainMenu">Main Menu</button>
           </div>
         </div>
         <div id="game-complete-overlay" class="level-complete-overlay hidden">
           <div class="overlay-panel" role="dialog" aria-labelledby="game-complete-title">
-            <h2 id="game-complete-title">Building Collection Complete</h2>
-            <p>Final Score: <strong id="total-score">0</strong></p>
-            <p>Final Accuracy: <strong id="total-accuracy">0%</strong></p>
-            <p>Best Final Score: <strong id="best-final-score">0</strong></p>
-            <p>Best Final Accuracy: <strong id="best-final-accuracy">0%</strong></p>
-            <button type="button" id="play-again-button">Play Again</button>
-            <button type="button" id="main-menu-button">Main Menu</button>
+            <h2 id="game-complete-title" data-i18n="overlays.gameComplete">Building Collection Complete</h2>
+            <p><span data-i18n="stats.finalScore">Final Score</span>: <strong id="total-score">0</strong></p>
+            <p><span data-i18n="stats.finalAccuracy">Final Accuracy</span>: <strong id="total-accuracy">0%</strong></p>
+            <p><span data-i18n="stats.bestFinalScore">Best Final Score</span>: <strong id="best-final-score">0</strong></p>
+            <p><span data-i18n="stats.bestFinalAccuracy">Best Final Accuracy</span>: <strong id="best-final-accuracy">0%</strong></p>
+            <button type="button" id="play-again-button" data-i18n="buttons.playAgain">Play Again</button>
+            <button type="button" id="main-menu-button" data-i18n="buttons.mainMenu">Main Menu</button>
           </div>
         </div>
       </section>
 
       <section class="controls-help" aria-label="Keyboard controls">
-        <h2>Controls</h2>
+        <h2 data-i18n="controls.title">Controls</h2>
         <dl>
           <div>
             <dt>&larr; &rarr;</dt>
-            <dd>Move</dd>
+            <dd data-i18n="controls.move">Move</dd>
           </div>
           <div>
             <dt>&uarr;</dt>
-            <dd>Rotate</dd>
+            <dd data-i18n="controls.rotate">Rotate</dd>
           </div>
           <div>
             <dt>&darr;</dt>
-            <dd>Soft drop</dd>
+            <dd data-i18n="controls.softDrop">Soft drop</dd>
           </div>
           <div>
             <dt>Space</dt>
-            <dd>Hard drop</dd>
+            <dd data-i18n="controls.hardDrop">Hard drop</dd>
           </div>
           <div>
             <dt>P</dt>
-            <dd>Pause</dd>
+            <dd data-i18n="controls.pause">Pause</dd>
           </div>
           <div>
             <dt>R</dt>
-            <dd>Restart</dd>
+            <dd data-i18n="controls.restart">Restart</dd>
           </div>
         </dl>
       </section>
 
       <section class="controls" aria-label="Game controls">
-        <button type="button" data-action="left">Left</button>
-        <button type="button" data-action="rotate">Rotate</button>
-        <button type="button" data-action="right">Right</button>
-        <button type="button" data-action="drop">Drop</button>
+        <button type="button" data-action="left" data-i18n="buttons.left">Left</button>
+        <button type="button" data-action="rotate" data-i18n="buttons.rotate">Rotate</button>
+        <button type="button" data-action="right" data-i18n="buttons.right">Right</button>
+        <button type="button" data-action="drop" data-i18n="buttons.drop">Drop</button>
       </section>
     </main>
 
