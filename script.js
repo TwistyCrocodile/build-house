@@ -23,6 +23,7 @@ const nextLevelButton = document.querySelector("#next-level-button");
 const levelBriefOverlay = document.querySelector("#level-brief-overlay");
 const briefLevelNumberElement = document.querySelector("#brief-level-number");
 const levelBriefTitleElement = document.querySelector("#level-brief-title");
+const briefAtmosphereElement = document.querySelector("#brief-atmosphere");
 const briefObjectiveElement = document.querySelector("#brief-objective");
 const briefHintElement = document.querySelector("#brief-hint");
 const briefPreviewElement = document.querySelector("#brief-preview");
@@ -60,7 +61,7 @@ const finalRecordStorageKey = `${storagePrefix}:finalRecord`;
 
 const translations = {
   en: {
-    "app.title": "Build the House",
+    "app.title": "BUILD THE HOUSE",
     "blueprint.plan": "PLAN 10 x 18",
     "menu.subtitle": "Architectural block puzzle",
     "stats.level": "Level",
@@ -77,7 +78,7 @@ const translations = {
     "stats.bestFinalAccuracy": "Best Final Accuracy",
     "buttons.soundOn": "Sound: On",
     "buttons.soundOff": "Sound: Off",
-    "buttons.language": "Language: EN",
+    "buttons.language": "🌐 EN",
     "buttons.startGame": "Start Game",
     "buttons.continue": "Continue",
     "buttons.howToPlay": "How To Play",
@@ -132,46 +133,52 @@ const translations = {
     "ratings.apprentice": "Apprentice",
     "ratings.failedProject": "Failed Project",
     "levels.smallHouse.name": "Small House",
+    "levels.smallHouse.atmosphere": "A perfect place to begin.",
     "levels.smallHouse.objective":
       "Build at least 80% of the house. The level ends when no more blocks can be placed. There are no required blueprint anchors.",
     "levels.smallHouse.hint": "Start with the roof and outer walls.",
     "levels.extension.name": "House With Extension",
+    "levels.extension.atmosphere": "Every home grows over time.",
     "levels.extension.objective": "Finish the main house before the extension.",
     "levels.extension.hint": "Finish the main house before the extension.",
     "levels.tower.name": "House With Tower",
+    "levels.tower.atmosphere": "Build high, but build wisely.",
     "levels.tower.objective": "Build the tower from the bottom.",
     "levels.tower.hint": "Build the tower from the bottom.",
     "levels.church.name": "Church",
+    "levels.church.atmosphere": "Precision reaches higher than stone.",
     "levels.church.objective": "Focus on the tall center first.",
     "levels.church.hint": "Focus on the tall center first.",
     "levels.windmill.name": "Windmill",
+    "levels.windmill.atmosphere": "Balance every piece carefully.",
     "levels.windmill.objective":
       "Build the center before the blades. Fill all Required Blueprint Anchors.",
     "levels.windmill.hint": "Build the center before the blades.",
     "levels.castle.name": "Castle",
+    "levels.castle.atmosphere": "Your greatest architectural challenge.",
     "levels.castle.objective":
       "Secure the towers before filling the walls. Fill all Required Blueprint Anchors.",
     "levels.castle.hint": "Secure the towers before filling the walls.",
   },
   ru: {
-    "app.title": "Build the House",
+    "app.title": "BUILD THE HOUSE",
     "blueprint.plan": "ПЛАН 10 x 18",
     "menu.subtitle": "Архитектурная головоломка с блоками",
     "stats.level": "Уровень",
     "stats.score": "Очки",
     "stats.accuracy": "Точность",
-    "stats.completion": "Заполнение",
+    "stats.completion": "Готовность",
     "stats.requiredAnchors": "Обязательные клетки",
     "stats.bestScore": "Лучшие очки",
     "stats.bestAccuracy": "Лучшая точность",
-    "stats.rating": "Оценка строительства",
+    "stats.rating": "Итог",
     "stats.finalScore": "Итоговые очки",
     "stats.finalAccuracy": "Итоговая точность",
     "stats.bestFinalScore": "Лучшие итоговые очки",
     "stats.bestFinalAccuracy": "Лучшая итоговая точность",
     "buttons.soundOn": "Звук: вкл.",
     "buttons.soundOff": "Звук: выкл.",
-    "buttons.language": "Language: RU",
+    "buttons.language": "🌐 RU",
     "buttons.startGame": "Начать игру",
     "buttons.continue": "Продолжить",
     "buttons.howToPlay": "Как играть",
@@ -188,9 +195,9 @@ const translations = {
     "buttons.drop": "Вниз",
     "overlays.howToPlay": "Как играть",
     "overlays.levelComplete": "Уровень пройден",
-    "overlays.gameOver": "Стройка завершена",
+    "overlays.gameOver": "Проект не завершён",
     "overlays.gameComplete": "Коллекция построек завершена",
-    "gameOver.body": "Строительство остановлено.",
+    "gameOver.body": "Не удалось завершить строительство.",
     "how.title": "Как играть",
     "how.rule1": "Размещайте падающие фигуры внутри области строительства.",
     "how.rule2": "Заполняйте клетки чертежа и старайтесь не выходить за его границы.",
@@ -216,33 +223,39 @@ const translations = {
     "brief.objective": "Цель",
     "brief.hint": "Совет",
     "messages.paused": "Пауза",
-    "messages.gameOver": "Стройка завершена",
+    "messages.gameOver": "Проект не завершён",
     "messages.levelComplete": "Уровень пройден",
     "messages.recordsReset": "Рекорды сброшены",
     "messages.mainMenuComingSoon": "Главное меню скоро появится",
-    "ratings.masterBuilder": "Легендарный строитель",
-    "ratings.architect": "Архитектор",
+    "ratings.masterBuilder": "Легендарный архитектор",
+    "ratings.architect": "Мастер-строитель",
     "ratings.builder": "Опытный строитель",
-    "ratings.apprentice": "Начинающий строитель",
+    "ratings.apprentice": "Подмастерье",
     "ratings.failedProject": "Проект не завершён",
     "levels.smallHouse.name": "Маленький дом",
+    "levels.smallHouse.atmosphere": "Идеальное место для начала.",
     "levels.smallHouse.objective":
       "Заполните не менее 80% чертежа. На этом уровне нет обязательных клеток.",
     "levels.smallHouse.hint": "Сначала соберите крышу и внешние стены, затем заполняйте середину.",
     "levels.extension.name": "Дом с пристройкой",
+    "levels.extension.atmosphere": "Каждый дом со временем растёт.",
     "levels.extension.objective": "Сначала достройте основной дом, затем переходите к пристройке.",
     "levels.extension.hint": "Не растягивайте основание слишком рано: пристройку удобнее закрывать в конце.",
     "levels.tower.name": "Дом с башней",
+    "levels.tower.atmosphere": "Стройте выше, но не теряйте опору.",
     "levels.tower.objective": "Соберите башню снизу вверх, чтобы верхние клетки не остались без опоры.",
     "levels.tower.hint": "Держите центр устойчивым и не перекрывайте место под башню.",
     "levels.church.name": "Церковь",
+    "levels.church.atmosphere": "Точность поднимается выше камня.",
     "levels.church.objective": "Постройте высокий шпиль первым, затем переходите к основанию.",
     "levels.church.hint": "Начните с узкого центра: широкий низ проще заполнить позже.",
     "levels.windmill.name": "Мельница",
+    "levels.windmill.atmosphere": "Каждая деталь должна держать баланс.",
     "levels.windmill.objective":
       "Сначала соберите центр мельницы, затем аккуратно достройте лопасти. Заполните все обязательные клетки.",
     "levels.windmill.hint": "Обязательные клетки в центре помогут удержать форму лопастей.",
     "levels.castle.name": "Замок",
+    "levels.castle.atmosphere": "Ваше главное архитектурное испытание.",
     "levels.castle.objective":
       "Сначала постройте башни, затем соедините их стенами. Заполните все обязательные клетки.",
     "levels.castle.hint": "Закрепите углы и верх башен, прежде чем закрывать широкие стены.",
@@ -1394,23 +1407,25 @@ function areRequiredCellsFilled() {
 }
 
 function getBuilderRating(completionPercent) {
+  const getRatingWithIcon = (ratingKey, icon) => `${icon} ${t(`ratings.${ratingKey}`)}`;
+
   if (completionPercent >= 95) {
-    return t("ratings.masterBuilder");
+    return getRatingWithIcon("masterBuilder", "🏛️");
   }
 
-  if (completionPercent >= 85) {
-    return t("ratings.architect");
+  if (completionPercent >= 90) {
+    return getRatingWithIcon("architect", "🏗️");
   }
 
   if (completionPercent >= 80) {
-    return t("ratings.builder");
+    return getRatingWithIcon("builder", "🧱");
   }
 
   if (completionPercent >= 60) {
-    return t("ratings.apprentice");
+    return getRatingWithIcon("apprentice", "👷");
   }
 
-  return t("ratings.failedProject");
+  return getRatingWithIcon("failedProject", "📐");
 }
 
 function calculateFinalAccuracy() {
@@ -1580,6 +1595,7 @@ function updateLevelBriefText() {
   const level = getCurrentLevel();
 
   levelBriefTitleElement.textContent = getLocalizedLevelText(level, "name");
+  briefAtmosphereElement.textContent = getLocalizedLevelText(level, "atmosphere");
   briefObjectiveElement.textContent = getLocalizedLevelText(level, "objective");
   briefHintElement.textContent = getLocalizedLevelText(level, "hint");
 }

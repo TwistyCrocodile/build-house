@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Build the House</title>
+    <title>BUILD THE HOUSE</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="game-container">
       <header class="game-header">
-        <h1 data-i18n="app.title">Build the House</h1>
+        <h1 data-i18n="app.title">BUILD THE HOUSE</h1>
         <div class="header-actions">
           <button type="button" id="sound-toggle" class="small-control">Sound: On</button>
-          <button type="button" id="language-toggle" class="small-control">Language: EN</button>
+          <button type="button" id="language-toggle" class="small-control">🌐 EN</button>
           <button type="button" id="reset-records-button" class="small-control" data-i18n="buttons.resetRecords">Reset Records</button>
         </div>
         <section class="stats" aria-label="Game stats">
@@ -50,7 +50,7 @@
         <div id="game-grid" class="game-grid"></div>
         <div id="main-menu-overlay" class="level-complete-overlay main-menu-overlay">
           <div class="overlay-panel main-menu-panel" role="dialog" aria-labelledby="main-menu-title">
-            <h2 id="main-menu-title" data-i18n="app.title">Build the House</h2>
+            <h2 id="main-menu-title" data-i18n="app.title">BUILD THE HOUSE</h2>
             <p class="menu-subtitle" data-i18n="menu.subtitle">Architectural block puzzle</p>
             <button type="button" id="start-game-button" data-i18n="buttons.startGame">Start Game</button>
             <button type="button" id="continue-game-button" data-i18n="buttons.continue">Continue</button>
@@ -138,6 +138,7 @@
           <div class="overlay-panel level-brief-panel" role="dialog" aria-labelledby="level-brief-title">
             <p class="brief-kicker"><span data-i18n="stats.level">Level</span> <span id="brief-level-number">1</span></p>
             <h2 id="level-brief-title">Small House</h2>
+            <p id="brief-atmosphere" class="brief-atmosphere">A perfect place to begin.</p>
             <div id="brief-preview" class="brief-preview" aria-label="Building preview"></div>
             <dl class="brief-copy">
               <div>

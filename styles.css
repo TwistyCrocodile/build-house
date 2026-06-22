@@ -39,7 +39,7 @@ body {
 
 h1 {
   margin: 0 0 14px;
-  font-size: clamp(2rem, 9vw, 2.7rem);
+  font-size: clamp(2.2rem, 9.8vw, 3rem);
   line-height: 1;
   font-weight: 800;
   letter-spacing: 0;
@@ -417,6 +417,7 @@ h1 {
 
 .main-menu-panel h2 {
   margin-bottom: 8px;
+  font-size: 1.68rem;
 }
 
 .menu-subtitle {
@@ -558,8 +559,17 @@ h1 {
 }
 
 .level-brief-panel h2 {
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   font-size: 1.35rem;
+  text-align: center;
+}
+
+.brief-atmosphere {
+  margin: 0 0 12px;
+  color: rgba(238, 245, 248, 0.64);
+  font-size: 0.84rem;
+  line-height: 1.3;
+  text-align: center;
 }
 
 .brief-kicker {
@@ -733,7 +743,7 @@ button:active {
 
   h1 {
     margin-bottom: 12px;
-    font-size: clamp(2rem, 3.2vw, 2.7rem);
+    font-size: clamp(2.2rem, 3.55vw, 3rem);
   }
 
   .header-actions {
